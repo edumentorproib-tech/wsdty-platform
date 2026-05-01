@@ -27,8 +27,8 @@ export default function LoginPage() {
         router.push('/app')
         router.refresh()
       }
-    } catch {
-      setError('Unable to connect. Please check your credentials and try again.')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Unable to connect. Please try again.')
     } finally {
       setLoading(false)
     }
@@ -48,8 +48,8 @@ export default function LoginPage() {
       if (error) {
         setError(error.message)
       }
-    } catch {
-      setError('Unable to connect. Please try again.')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Unable to connect. Please try again.')
     } finally {
       setLoading(false)
     }
