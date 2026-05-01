@@ -1,12 +1,14 @@
 'use client'
 
+export const dynamic = 'force-dynamic'
+
 import { useState } from 'react'
-import dynamic from 'next/dynamic'
+import nextDynamic from 'next/dynamic'
 import Tabs from '@/components/ui/Tabs'
 import FundamentalsTab from '@/components/world/FundamentalsTab'
 import TDATab from '@/components/world/TDATab'
 
-const GlobeTab = dynamic(() => import('@/components/world/GlobeTab'), {
+const GlobeTab = nextDynamic(() => import('@/components/world/GlobeTab'), {
   ssr: false,
   loading: () => (
     <div className="flex items-center justify-center h-[500px] text-gray-600 text-sm">

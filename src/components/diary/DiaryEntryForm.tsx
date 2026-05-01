@@ -11,7 +11,6 @@ interface DiaryEntryFormProps {
 }
 
 export default function DiaryEntryForm({ date, onSaved }: DiaryEntryFormProps) {
-  const supabase = createClient()
   const [todayTrades, setTodayTrades] = useState<Trade[]>([])
   const [reflections, setReflections] = useState<Record<string, string>>({})
   const [personalReflection, setPersonalReflection] = useState('')
@@ -27,6 +26,7 @@ export default function DiaryEntryForm({ date, onSaved }: DiaryEntryFormProps) {
     setLoading(true)
     setSaved(false)
 
+    const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) { setLoading(false); return }
 
@@ -83,7 +83,7 @@ export default function DiaryEntryForm({ date, onSaved }: DiaryEntryFormProps) {
     }
 
     setLoading(false)
-  }, [supabase, date])
+  }, [date])
 
   useEffect(() => {
     loadData()
@@ -93,6 +93,7 @@ export default function DiaryEntryForm({ date, onSaved }: DiaryEntryFormProps) {
     setError(null)
     setSaving(true)
 
+    const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) { setError('Not authenticated.'); setSaving(false); return }
 

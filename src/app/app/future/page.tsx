@@ -1,5 +1,7 @@
 'use client'
 
+export const dynamic = 'force-dynamic'
+
 import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
@@ -8,20 +10,20 @@ import AddTradeModal from '@/components/future/AddTradeModal'
 import type { Trade } from '@/lib/types'
 
 export default function FuturePage() {
-  const supabase = createClient()
   const [trades, setTrades] = useState<Trade[]>([])
   const [loading, setLoading] = useState(true)
   const [modalOpen, setModalOpen] = useState(false)
 
   const loadTrades = useCallback(async () => {
     setLoading(true)
+    const supabase = createClient()
     const { data } = await supabase
       .from('trades')
       .select('*')
       .order('created_at', { ascending: false })
     setTrades((data as Trade[]) ?? [])
     setLoading(false)
-  }, [supabase])
+  }, [])
 
   useEffect(() => {
     loadTrades()

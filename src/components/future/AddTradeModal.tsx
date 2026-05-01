@@ -36,7 +36,6 @@ const INITIAL: FormState = {
 }
 
 export default function AddTradeModal({ open, onClose, onAdded }: AddTradeModalProps) {
-  const supabase = createClient()
   const [form, setForm] = useState<FormState>(INITIAL)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -54,6 +53,7 @@ export default function AddTradeModal({ open, onClose, onAdded }: AddTradeModalP
     setError(null)
     setSaving(true)
 
+    const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) { setError('Not authenticated.'); setSaving(false); return }
 

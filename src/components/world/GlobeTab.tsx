@@ -145,7 +145,8 @@ export default function GlobeTab() {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const topo = worldData as any
-    const countries = (feature(topo, topo.objects.countries) as { features: unknown[] }).features
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const countries = (feature(topo, topo.objects.countries) as unknown as { features: unknown[] }).features
 
     const getProjection = () =>
       d3

@@ -1,5 +1,7 @@
 'use client'
 
+export const dynamic = 'force-dynamic'
+
 import { useState, useEffect, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import DiaryEntryForm from '@/components/diary/DiaryEntryForm'
@@ -8,7 +10,7 @@ import type { DiaryEntry, Trade } from '@/lib/types'
 
 function computeStreak(dates: string[]): number {
   if (dates.length === 0) return 0
-  const sorted = [...new Set(dates)].sort((a, b) => b.localeCompare(a))
+  const sorted = Array.from(new Set(dates)).sort((a, b) => b.localeCompare(a))
   const today = new Date().toISOString().split('T')[0]
   const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0]
   if (sorted[0] !== today && sorted[0] !== yesterday) return 0
@@ -24,7 +26,6 @@ function computeStreak(dates: string[]): number {
 }
 
 export default function DiaryPage() {
-  const supabase = createClient()
   const today = new Date().toISOString().split('T')[0]
   const [selectedDate, setSelectedDate] = useState(today)
   const [entries, setEntries] = useState<DiaryEntry[]>([])
@@ -34,6 +35,7 @@ export default function DiaryPage() {
 
   const loadData = useCallback(async () => {
     setLoading(true)
+    const supabase = createClient()
     const { data: entryData } = await supabase
       .from('diary_entries')
       .select('*')
@@ -47,7 +49,7 @@ export default function DiaryPage() {
     setTrades((tradeData as Trade[]) ?? [])
 
     setLoading(false)
-  }, [supabase])
+  }, [])
 
   useEffect(() => {
     loadData()

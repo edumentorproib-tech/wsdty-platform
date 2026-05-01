@@ -31,7 +31,6 @@ const WILL_WORK_OPTIONS: { value: WillWork; label: string; color: string }[] = [
 ]
 
 export default function TDATab() {
-  const supabase = createClient()
   const fileRef = useRef<HTMLInputElement>(null)
   const [form, setForm] = useState<FormState>(INITIAL)
   const [imageFile, setImageFile] = useState<File | null>(null)
@@ -68,6 +67,7 @@ export default function TDATab() {
 
     let chartImageUrl: string | null = null
 
+    const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) { setError('Not authenticated.'); setSaving(false); return }
 
