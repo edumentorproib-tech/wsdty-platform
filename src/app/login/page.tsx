@@ -18,31 +18,39 @@ export default function LoginPage() {
     e.preventDefault()
     setLoading(true)
     setError(null)
-
-    const supabase = createClient()
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
-
-    if (error) {
-      setError(error.message)
+    try {
+      const supabase = createClient()
+      const { error } = await supabase.auth.signInWithPassword({ email, password })
+      if (error) {
+        setError(error.message)
+      } else {
+        router.push('/app')
+        router.refresh()
+      }
+    } catch {
+      setError('Unable to connect. Please check your credentials and try again.')
+    } finally {
       setLoading(false)
-    } else {
-      router.push('/app')
-      router.refresh()
     }
   }
 
   async function handleGoogleLogin() {
     setLoading(true)
     setError(null)
-    const supabase = createClient()
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
-    })
-    if (error) {
-      setError(error.message)
+    try {
+      const supabase = createClient()
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+        },
+      })
+      if (error) {
+        setError(error.message)
+      }
+    } catch {
+      setError('Unable to connect. Please try again.')
+    } finally {
       setLoading(false)
     }
   }

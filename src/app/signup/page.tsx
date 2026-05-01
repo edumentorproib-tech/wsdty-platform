@@ -31,20 +31,24 @@ export default function SignupPage() {
     }
 
     setLoading(true)
-    const supabase = createClient()
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
-      },
-    })
-
-    if (error) {
-      setError(error.message)
+    try {
+      const supabase = createClient()
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
+        },
+      })
+      if (error) {
+        setError(error.message)
+      } else {
+        setSuccess(true)
+      }
+    } catch {
+      setError('Unable to connect. Please check your internet connection and try again.')
+    } finally {
       setLoading(false)
-    } else {
-      setSuccess(true)
     }
   }
 
