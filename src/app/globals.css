@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #0A0A0A;
+  --navy: #0F2547;
+  --gold: #C9A961;
+  --gold-light: #DEC07A;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: #0A0A0A;
+  color: #ffffff;
+}
+
+::selection {
+  background: #C9A961;
+  color: #0A0A0A;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111111;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #444444;
+}
+
+/* Gold gradient text utility */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #C9A961 0%, #DEC07A 50%, #C9A961 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Subtle glow on gold elements */
+.gold-glow {
+  box-shadow: 0 0 20px rgba(201, 169, 97, 0.15);
+}
+
+/* Card base style */
+.card {
+  background: #111111;
+  border: 1px solid #222222;
+  border-radius: 8px;
+}
+
+/* Input base style */
+.input-base {
+  background: #1a1a1a;
+  border: 1px solid #333333;
+  border-radius: 6px;
+  color: #ffffff;
+  padding: 0.5rem 0.75rem;
+  width: 100%;
+  transition: border-color 0.15s;
+}
+
+.input-base:focus {
+  outline: none;
+  border-color: #C9A961;
+}
+
+.input-base::placeholder {
+  color: #555555;
+}
